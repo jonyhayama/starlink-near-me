@@ -9,6 +9,13 @@ function App() {
     lon: -74.04903955504285
   }])
 
+  const handleClick = ({ lat, lng }) => {
+    setLocation([{
+      lat: lat,
+      lon: lng
+    }])
+  }
+
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -61,6 +68,8 @@ function App() {
         labelDotRadius={() => 1}
         labelColor={() => 'rgba(255, 165, 0, 0.75)'}
         labelResolution={2}
+
+        onGlobeClick={handleClick}
       />
     </div>
   )
