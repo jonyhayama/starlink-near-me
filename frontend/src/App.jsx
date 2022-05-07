@@ -3,10 +3,14 @@ import ReactGlobe from 'react-globe.gl';
 
 function App() {
   const [satellites, setSatellites] = useState([])
+  const [location, setLocation] = useState({
+    lat: 40.700006352618544,
+    lon: -74.04903955504285
+  })
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'http://localhost:3100/api/near-me?lat=40.700006352618544&lon=-74.04903955504285&qty=50'
+      const url = `http://localhost:3100/api/near-me?lat=${location.lat}&lon=${location.lon}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
@@ -31,6 +35,15 @@ function App() {
         objectDotRadius={0.7}
         objectColor={() => 'rgba(255, 165, 0, 0.75)'}
         objectResolution={1}
+
+        labelsData={[location]}
+        labelLat={d => d.lat}
+        labelLng={d => d.lon}
+        labelText={() => 'Me'}
+        labelSize={() => 1}
+        labelDotRadius={() => 1}
+        labelColor={() => 'rgba(255, 165, 0, 0.75)'}
+        labelResolution={2}
       />
     </div>
   )
