@@ -5,6 +5,7 @@ module Api
     # /api/near-me?lat=40.700006352618544&lon=-74.04903955504285&qty=3
     def index
       @satellites = Starlink.near_me(*index_params)
+      expires_in 15.minutes, public: true
     end
 
     private
