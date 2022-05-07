@@ -5,15 +5,12 @@ function App() {
   const globeEl = useRef();
   const [satellites, setSatellites] = useState([])
   const [location, setLocation] = useState([{
-    lat: 40.700006352618544,
-    lon: -74.04903955504285
+    lat: 40.695841666625206,
+    lng: -74.04423303705076
   }])
 
-  const handleClick = ({ lat, lng }) => {
-    setLocation([{
-      lat: lat,
-      lon: lng
-    }])
+  const handleClick = (globeLocation) => {
+    setLocation([globeLocation])
   }
 
   useEffect(() => {
@@ -21,7 +18,7 @@ function App() {
       navigator.geolocation.getCurrentPosition(function(position) {
         setLocation([{
           lat: position.coords.latitude,
-          lon: position.coords.longitude
+          lng: position.coords.longitude
         }])
       }, function(error) {
         console.error("Error Code = " + error.code + " - " + error.message);
@@ -30,15 +27,15 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const { lat, lon } = location[0]
+    const { lat, lng } = location[0]
     const fetchData = async () => {
-      const url = `http://localhost:3100/api/near-me?lat=${lat}&lon=${lon}&qty=50`
+      const url = `http://localhost:3100/api/near-me?lat=${lat}&lon=${lng}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
     }
 
-    globeEl.current.pointOfView({ lat, lng: lon });
+    globeEl.current.pointOfView({ lat, lng });
     fetchData();
   }, [location])
 
@@ -62,7 +59,7 @@ function App() {
 
         labelsData={location}
         labelLat={d => d.lat}
-        labelLng={d => d.lon}
+        labelLng={d => d.lng}
         labelText={() => 'Me'}
         labelSize={() => 1}
         labelDotRadius={() => 1}
