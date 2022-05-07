@@ -1,9 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [satellites, setSatellites] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://localhost:3100/api/near-me?lat=40.700006352618544&lon=-74.04903955504285&qty=3'
+      const response = await fetch(url);
+      const data = await response.json();
+      setSatellites(data);
+    }
+
+    fetchData();
+  }, [])
 
   return (
     <div className="App">
@@ -37,6 +49,12 @@ function App() {
             Vite Docs
           </a>
         </p>
+        <p>Satellites</p>
+        <ul>
+          {satellites.map(satellite => (
+            <li>id: { satellite['id'] }</li>
+          ))}
+        </ul>
       </header>
     </div>
   )
