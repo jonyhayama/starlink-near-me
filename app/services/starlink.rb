@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Handles Starlink API Calls
 class Starlink
   # NOTE: Caching the endpoint data into a file might not be the best approach, but I'll work for now :)
   CACHE_FILENAME = 'tmp/satellites.json'
@@ -7,7 +8,7 @@ class Starlink
 
   class << self
     # Starlink.near_me(40.700006352618544, -74.04903955504285, 3)
-    def near_me(lat, lon, n)
+    def near_me(lat, lon, qty)
       raw = fetch_satellites
       satellites = raw.each_with_object({}).with_index do |(satellite, obj), index|
         if satellite['latitude'] && satellite['longitude']
@@ -16,7 +17,7 @@ class Starlink
         end
       end.sort.to_h
 
-      satellites.first(n).map { |sat| { satellite: raw[sat.last[:index]], distance: sat.first } }
+      satellites.first(qty).map { |sat| { satellite: raw[sat.last[:index]], distance: sat.first } }
     end
 
     def fetch_satellites
