@@ -9,25 +9,32 @@ class Starlink
   class << self
     # Starlink.near_me(40.700006352618544, -74.04903955504285, 3)
     def near_me(lat, lon, qty)
-      raw = fetch_satellites
-      satellites = raw.each_with_object({}).with_index do |(satellite, obj), index|
+      dictionary(lat, lon).first(qty).map do |item|
+        { satellite: satellites[item.last[:index]], distance: item.first }
+      end
+    end
+
+    private
+    
+    def dictionary(lat, lon)
+      satellites.each_with_object({}).with_index do |(satellite, obj), index|
         if satellite['latitude'] && satellite['longitude']
           distance = Haversine.distance(lat, lon, satellite['latitude'].to_f, satellite['longitude'].to_f).to_m
           obj[distance] = { index: index, id: satellite['id'] }
         end
       end.sort.to_h
-
-      satellites.first(qty).map { |sat| { satellite: raw[sat.last[:index]], distance: sat.first } }
     end
 
-    def fetch_satellites
+    def satellites
+      return @satellites if @satellites.present?
+
       if cached_file?
-        Oj.load(File.read(CACHE_FILENAME))
+        @satellites = Oj.load(File.read(CACHE_FILENAME))
       else
         response = HTTParty.get('https://api.spacexdata.com/v4/starlink')
         File.write(CACHE_FILENAME, response.body)
 
-        Oj.load(response.body)
+        @satellites = Oj.load(response.body)
       end
     end
 
