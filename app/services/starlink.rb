@@ -15,7 +15,7 @@ class Starlink
     end
 
     private
-    
+
     def dictionary(lat, lon)
       satellites.each_with_object({}).with_index do |(satellite, obj), index|
         if satellite['latitude'] && satellite['longitude']
