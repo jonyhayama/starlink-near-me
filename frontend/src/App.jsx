@@ -3,25 +3,38 @@ import ReactGlobe from 'react-globe.gl';
 
 function App() {
   const [satellites, setSatellites] = useState([])
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState([{
     lat: 40.700006352618544,
     lon: -74.04903955504285
-  })
+  }])
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        setLocation([{
+          lat: position.coords.latitude,
+          lon: position.coords.longitude
+        }])
+      }, function(error) {
+        console.error("Error Code = " + error.code + " - " + error.message);
+      });
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `http://localhost:3100/api/near-me?lat=${location.lat}&lon=${location.lon}&qty=50`
+      const url = `http://localhost:3100/api/near-me?lat=${location[0].lat}&lon=${location[0].lon}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
     }
 
     fetchData();
-  }, [])
+  }, [location])
 
   return (
     <div>
-      <ReactGlobe 
+      <ReactGlobe
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
@@ -36,7 +49,7 @@ function App() {
         objectColor={() => 'rgba(255, 165, 0, 0.75)'}
         objectResolution={1}
 
-        labelsData={[location]}
+        labelsData={location}
         labelLat={d => d.lat}
         labelLng={d => d.lon}
         labelText={() => 'Me'}
