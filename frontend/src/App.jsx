@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ReactGlobe from 'react-globe.gl';
 
 function App() {
+  const globeEl = useRef();
   const [satellites, setSatellites] = useState([])
   const [location, setLocation] = useState([{
     lat: 40.700006352618544,
@@ -22,19 +23,22 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const { lat, lon } = location[0]
     const fetchData = async () => {
-      const url = `http://localhost:3100/api/near-me?lat=${location[0].lat}&lon=${location[0].lon}&qty=50`
+      const url = `http://localhost:3100/api/near-me?lat=${lat}&lon=${lon}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
     }
 
+    globeEl.current.pointOfView({ lat, lng: lon });
     fetchData();
   }, [location])
 
   return (
     <div>
       <ReactGlobe
+        ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
