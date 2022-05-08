@@ -82,6 +82,17 @@ function App() {
           <input type="number" name="qty" step="1" min="1" max="100" value={formState.qty} onChange={(e) => setFormState({...formState, qty: e.target.value }) } />
           <button>Save</button>
         </form>
+        <div className='credits'>
+          <hr />
+          <ul>
+            <li>Deployed on <a href="https://railway.app" target="_blank">Railway</a></li>
+            <li>Satellites data fetched from <a href="https://github.com/r-spacex/SpaceX-API" target="_blank">SpaceX-API</a></li>
+            <li>Misterious distance math done by <a href="https://github.com/kristianmandrup/haversine" target="_blank">haversine</a></li>
+            <li>Awesome Globe done with <a href="https://github.com/vasturiano/react-globe.gl" target="_blank">react-globe.gl</a></li>
+            <li>Cog Icon by <a href="https://fontawesome.com/" target="_blank">Font Awesome</a></li>
+          </ul>
+          <p>Modern Browsers only, please 😜</p>
+        </div>
       </aside>
       <header className='main-header'>
         <h1>Starlink™ near me</h1>
