@@ -43,6 +43,9 @@ function App() {
 
   return (
     <div>
+      <header className='main-header'>
+        <h1>Starlink™ near me</h1>
+      </header>
       <ReactGlobe
         ref={globeEl}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -70,6 +73,10 @@ function App() {
 
         onGlobeClick={handleClick}
       />
+      <footer className='main-footer'>
+        <strong>DISCLAIMER:</strong>
+        <p>I'm not affiliated, associated, authorized, endorsed by, or in any way officially connected with Space Exploration Technologies Corp (SpaceX), or any of its subsidiaries or its affiliates. The names SpaceX as well as related names, marks, emblems and images are registered trademarks of their respective owners.</p>
+      </footer>
     </div>
   )
 }
