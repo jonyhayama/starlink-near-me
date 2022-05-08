@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     const { lat, lng } = location[0]
     const fetchData = async () => {
-      const url = `${API_URL}/api/near-me?lat=${lat}&lon=${lng}&qty=50`
+      const url = `${API_URL}/api/near-me?lat=${lat}&lng=${lng}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
