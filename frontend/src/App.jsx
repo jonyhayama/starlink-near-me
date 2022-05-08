@@ -15,7 +15,9 @@ function App() {
   const [isConfigVisible, setIsConfigVisible] = useState(false)
 
   const handleClick = (globeLocation) => {
-    setLocation([{ ...location[0], ...globeLocation }])
+    const newLocation = { ...formState, ...globeLocation };
+    setFormState(newLocation)
+    setLocation([newLocation])
   }
 
   const handleForm = (e) => {
