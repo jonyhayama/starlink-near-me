@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import ReactGlobe from 'react-globe.gl';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   const globeEl = useRef();
   const [satellites, setSatellites] = useState([])
@@ -29,7 +31,7 @@ function App() {
   useEffect(() => {
     const { lat, lng } = location[0]
     const fetchData = async () => {
-      const url = `http://localhost:3100/api/near-me?lat=${lat}&lon=${lng}&qty=50`
+      const url = `${API_URL}/api/near-me?lat=${lat}&lon=${lng}&qty=50`
       const response = await fetch(url);
       const data = await response.json();
       setSatellites(data);
