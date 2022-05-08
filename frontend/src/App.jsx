@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import ReactGlobe from 'react-globe.gl';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 function App() {
   const globeEl = useRef();
