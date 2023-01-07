@@ -85,7 +85,6 @@ function App() {
         <div className='credits'>
           <hr />
           <ul>
-            <li>Deployed on <a href="https://railway.app" target="_blank">Railway</a></li>
             <li>Satellites data fetched from <a href="https://github.com/r-spacex/SpaceX-API" target="_blank">SpaceX-API</a></li>
             <li>Misterious distance math done by <a href="https://github.com/kristianmandrup/haversine" target="_blank">haversine</a></li>
             <li>Awesome Globe done with <a href="https://github.com/vasturiano/react-globe.gl" target="_blank">react-globe.gl</a></li>
