@@ -1,0 +1,19 @@
+version: "3.1"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3100:3100"
+    volumes:
+      - .:/user/src/app
+    stdin_open: true
+    tty: true
+    restart: "no"
+    networks:
+      - starlink-near-me-network
+
+networks:
+  starlink-near-me-network:
+    driver: bridge
